@@ -76,7 +76,8 @@ namespace OkReads.Controllers
         }
         public ActionResult Search(string s)
         {
-            IEnumerable<Book> books = db.Books.Where(x => x.Authors.Select(a => a.Name).Any(b => b.Contains(s))
+            IEnumerable<Book> books = db.Books.Where(x => x.Title.Contains(s) 
+                                                       || x.Authors.Select(a => a.Name).Any(b => b.Contains(s))
                                                        || x.Isbn.Contains(s)).ToList();
             return View(books);
         }
