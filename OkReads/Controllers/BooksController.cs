@@ -74,5 +74,10 @@ namespace OkReads.Controllers
             }
             base.Dispose(disposing);
         }
+        public ActionResult Search(string s)
+        {
+            IEnumerable<Book> books = db.Books.Where(x => x.Isbn.Contains(s)).ToList();
+            return View(books);
+        }
     }
 }
