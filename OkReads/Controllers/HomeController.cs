@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OkReads.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +9,13 @@ namespace OkReads.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        private readonly int GenresToShow = 10;
+
         public ActionResult Index()
         {
+            ViewBag.Genres = (from x in db.Genres select x).Take(GenresToShow);
             return View();
         }
 
