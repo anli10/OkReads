@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -29,5 +30,10 @@ namespace OkReads.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<Genre> Genres { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<LibraryEntry> LibraryEntries { get; set; }
     }
 }
