@@ -1,0 +1,50 @@
+﻿@model IEnumerable<OkReads.Models.Book>
+
+@using OkReads.Models
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>@ViewBag.Genre.Name</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            Authors
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Isbn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Score)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @String.Join(", ", item.Authors.Select(x => x.Name))
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Isbn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Score)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BookId, controller="Books" }) |
+            @Html.ActionLink("Details", "Details", new { id=item.BookId, controller = "Books" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.BookId, controller = "Books" })
+        </td>
+    </tr>
+}
+
+</table>
