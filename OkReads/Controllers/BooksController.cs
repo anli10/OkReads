@@ -17,6 +17,14 @@ namespace OkReads.Controllers
     public class BooksController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private UserManager<ApplicationUser> userManager;
+
+        public BooksController()
+        {
+            userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            Classifier.Initialize("http://localhost:8000/");
+        }
+
         // GET: Books
         public ActionResult Index()
         {
