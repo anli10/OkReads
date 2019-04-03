@@ -1,0 +1,71 @@
+﻿@model IEnumerable<OkReads.Models.Book>
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            Authors
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Isbn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Score)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            <img style="max-height:150px" src="#" /> @* Set src to item.CoverPath*@
+        </td>
+        <td class="search-result">
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td class="search-result">
+            @String.Join(",", item.Authors)
+        </td>
+        <td class="search-result">
+            @Html.DisplayFor(modelItem => item.Isbn)
+        </td>
+        <td class="search-result">
+            @Html.DisplayFor(modelItem => item.Score)
+        </td>
+        <td class="search-result">
+            @Html.ActionLink("Edit", "Edit", new { id = item.BookId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.BookId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.BookId })
+        </td>
+    </tr>
+    }
+
+</table>
+
+@section scripts {
+    <script>
+        //FIXME: Highlighting is case sensitive but search is not
+        var s = "@Request.Params[0]";
+        var highlight = "<span class='search-highlight'>" + s + "</span>";
+        $(".search-result").each(function () {
+            var text = $(this).html();
+            $(this).html(text.replace(new RegExp(s, 'g'), highlight));
+        });
+    </script>
+}
+
