@@ -143,5 +143,15 @@ namespace OkReads.Controllers
             ApplicationUser applicationUser = userManager.FindByName(User.Identity.Name);
             return View(applicationUser);
         }
+
+        public ActionResult GetRecommendations(string userName)
+        {
+            ApplicationUser user = userManager.FindByName(userName);
+            IEnumerable<string> interests = user.Library.Select(x => x.Book.Genre.Name).Distinct();
+            // FIXME: Remove hardcoded Take argument
+            var covers = db.Books.Where(x => interests.Contains(x.Genre.Name)).Select(x => new { x.BookId, x.CoverPath }).OrderBy(x => Guid.NewGuid()).Take(5); 
+            // FIXME: Return failure status if necessary
+            return Json(new { status = "success", covers= JsonConvert.SerializeObject(covers) }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
