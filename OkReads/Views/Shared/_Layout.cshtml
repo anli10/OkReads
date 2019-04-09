@@ -28,6 +28,14 @@
         </div>
     </nav>
     <div class="container body-content">
+        @if (Request.IsAuthenticated)
+        {
+            <div class="row" id="recommended">
+                <div class="col-md-4">
+                    <p>You might be interested in:</p>
+                </div>
+            </div>
+        }
         @RenderBody()
         <hr />
         <footer>
@@ -38,5 +46,25 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @if (Request.IsAuthenticated)
+    {
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: '@Url.Action("GetRecommendations", "Users", new { userName = User.Identity.Name } )',
+                    type: 'GET',
+                    error: function (response) {
+                        console.log(response);
+                    },
+                    success: function (response) {
+                        for (let i of jQuery.parseJSON(response['covers'])) {
+                            //TODO: Add link to book
+                            $("#recommended").append(`<div class="col"><img style="max-height: 150px" class="img-fluid" src="${i.CoverPath}" /></div>`);
+                        }
+                    }
+                });
+            });
+        </script>
+    }
 </body>
 </html>
