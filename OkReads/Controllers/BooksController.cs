@@ -242,6 +242,28 @@ namespace OkReads.Controllers
             return Redirect(Request.UrlReferrer.AbsoluteUri);
         }
 
-        // TODO: Add action to remove book from library
+        public ActionResult RemoveFromLibrary(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            LibraryEntry entry = db.LibraryEntries.Find(id);
+            if (entry == null)
+            {
+                return HttpNotFound();
+            }
+            return View(entry);
+        }
+
+        [HttpPost, ActionName("RemoveFromLibrary")]
+        public ActionResult RemoveFromLibraryConfirmed(int? id)
+        {
+            ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
+            LibraryEntry entry = db.LibraryEntries.Find(id);
+            db.LibraryEntries.Remove(entry);
+            db.SaveChanges();
+            return RedirectToAction("Library", "Users");
+        }
     }
 }

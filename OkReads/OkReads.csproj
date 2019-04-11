@@ -308,6 +308,7 @@
     <Content Include="Views\Genres\Details.cshtml" />
     <Content Include="Views\Users\Library.cshtml" />
     <Content Include="Views\Genres\Index.cshtml" />
+    <Content Include="Views\Books\RemoveFromLibrary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

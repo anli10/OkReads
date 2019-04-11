@@ -23,26 +23,25 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.Library) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Book.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Book.Isbn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Book.Score)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookStatus)
-        </td>
-        <td>
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.BookId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BookId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BookId })*@
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.Library)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Book.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Book.Isbn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Book.Score)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookStatus)
+            </td>
+            <td>
+                @Html.ActionLink("Remove from library", "RemoveFromLibrary", new { controller="Books", id = item.LibraryEntryId })
+            </td>
+        </tr>
+    }
 
 </table>
